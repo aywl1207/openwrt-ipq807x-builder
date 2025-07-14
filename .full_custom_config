@@ -5688,7 +5688,7 @@ CONFIG_PACKAGE_luci-i18n-package-manager-zh-tw=y
 # CONFIG_PACKAGE_luci-i18n-pbr-da is not set
 # CONFIG_PACKAGE_luci-i18n-pbr-de is not set
 # CONFIG_PACKAGE_luci-i18n-pbr-el is not set
-CONFIG_PACKAGE_luci-i18n-pbr-es=y
+# CONFIG_PACKAGE_luci-i18n-pbr-es is not set
 # CONFIG_PACKAGE_luci-i18n-pbr-fi is not set
 # CONFIG_PACKAGE_luci-i18n-pbr-fr is not set
 # CONFIG_PACKAGE_luci-i18n-pbr-he is not set
@@ -5713,7 +5713,7 @@ CONFIG_PACKAGE_luci-i18n-pbr-es=y
 # CONFIG_PACKAGE_luci-i18n-pbr-uk is not set
 # CONFIG_PACKAGE_luci-i18n-pbr-vi is not set
 # CONFIG_PACKAGE_luci-i18n-pbr-zh-cn is not set
-CONFIG_PACKAGE_luci-i18n-pbr-zh-tw=y
+# CONFIG_PACKAGE_luci-i18n-pbr-zh-tw is not set
 # CONFIG_PACKAGE_luci-i18n-sqm-ar is not set
 # CONFIG_PACKAGE_luci-i18n-sqm-bg is not set
 # CONFIG_PACKAGE_luci-i18n-sqm-bn is not set
