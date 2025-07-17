@@ -43,7 +43,7 @@ jobs:
         run: cp -f .full_custom_config .config
 
       - name: Import my feeds.conf.default for IPQ807x NSS
-        run: cp -f feeds.conf.default feeds.conf.default
+        run: cp -f myfeeds.conf.default feeds.conf.default
 
       - name: QoL fixes on default config
         run: |
