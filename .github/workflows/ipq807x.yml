@@ -42,6 +42,9 @@ jobs:
       - name: Import full config for IPQ807x NSS
         run: cp .full_custom_config .config
 
+      - name: Import my feeds.conf.default for IPQ807x NSS
+        run: cp feeds.conf.default feeds.conf.default
+
       - name: QoL fixes on default config
         run: |
           mkdir -p files/etc/uci-defaults
@@ -52,11 +55,10 @@ jobs:
           uci set wireless.radio1.disabled=0
           uci set wireless.radio2.disabled=0
           uci set pbuf.opt.memory_profile=auto
-          uci set firewall.@defaults[0].flow_offloading=0
+          uci set firewall.@defaults[0].flow_offloading=1
+          uci set firewall.@defaults[0].flow_offloading_hw=1
           uci set ecm.@general[0].enable_bridge_filtering=0
           uci set system.@system[0].cronloglevel='7'
-          /etc/init.d/mwan3 stop
-          /etc/init.d/mwan3 disable
           /etc/init.d/sqm stop
           /etc/init.d/sqm disable
           uci commit
