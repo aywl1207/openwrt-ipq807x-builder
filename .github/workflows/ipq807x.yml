@@ -40,7 +40,7 @@ jobs:
 #          rm -rf openwrt-cloudflared
           
       - name: Import full config for IPQ807x NSS
-        run: cp .full_custom_config .config
+        run: cp -f .full_custom_config .config
 
       - name: Import my feeds.conf.default for IPQ807x NSS
         run: cp feeds.conf.default feeds.conf.default
