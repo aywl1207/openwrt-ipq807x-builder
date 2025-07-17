@@ -516,8 +516,8 @@ CONFIG_KERNEL_WERROR=y
 # Package build options
 #
 # CONFIG_DEBUG is not set
-CONFIG_USE_GC_SECTIONS=y
-CONFIG_USE_LTO=y
+# CONFIG_USE_GC_SECTIONS is not set
+# CONFIG_USE_LTO is not set
 CONFIG_MOLD=y
 # CONFIG_USE_MOLD is not set
 CONFIG_IPV6=y
@@ -579,7 +579,7 @@ CONFIG_BUILD_LOG_DIR=""
 # CONFIG_SRC_TREE_OVERRIDE is not set
 CONFIG_EXTRA_OPTIMIZATION="-fno-caller-saves -fno-plt"
 CONFIG_TARGET_OPTIONS=y
-CONFIG_TARGET_OPTIMIZATION="-O3 -pipe -mcpu=cortex-a53+crc+crypto -fdata-sections -ffunction-sections"
+CONFIG_TARGET_OPTIMIZATION="-O2 -pipe -mcpu=cortex-a53+crc+crypto"
 # CONFIG_BPF_TOOLCHAIN_NONE is not set
 # CONFIG_BPF_TOOLCHAIN_HOST is not set
 CONFIG_BPF_TOOLCHAIN_BUILD_LLVM=y
