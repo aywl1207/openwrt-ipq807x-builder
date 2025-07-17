@@ -28,6 +28,9 @@ jobs:
       - name: Clean up temporary folder
         run: rm -rf openwrt-ipq807x
 
+      - name: Import my feeds.conf.default for IPQ807x NSS
+        run: cp -f myfeeds.conf.default feeds.conf.default
+
       - name: Update feeds
         run: |
           ./scripts/feeds update -a
@@ -41,9 +44,6 @@ jobs:
           
       - name: Import full config for IPQ807x NSS
         run: cp -f .full_custom_config .config
-
-      - name: Import my feeds.conf.default for IPQ807x NSS
-        run: cp -f myfeeds.conf.default feeds.conf.default
 
       - name: QoL fixes on default config
         run: |
