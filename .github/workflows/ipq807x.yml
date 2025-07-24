@@ -1,47 +1,39 @@
 name: Build IPQ807x NSS WiFi for devices
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
 
 jobs:
-  build:
-    name: Prepare and build IPQ807x NSS images for devices
+  prepare:
+    name: Prepare build environment
     runs-on: self-hosted
     steps:
-
       - name: 'Cleanup build folder'
         run: |
           ls -la ./
           rm -rf ./* || true
           rm -rf ./.??* || true
           ls -la ./
-        
       - name: Checkout
         uses: actions/checkout@v2
-
       - name: Clone AgustinLorenzo openwrt for IPQ807x
         run: |
           git clone --branch custom_main_nss https://github.com/aywl1207/openwrt-ipq807x.git openwrt-ipq807x
-
       - name: Move openwrt files to root
         run: mv openwrt-ipq807x/* .
-
       - name: Clean up temporary folder
         run: rm -rf openwrt-ipq807x
-
       - name: Update feeds
         run: |
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-          
-#      - name: Update custom golang
-#        run: |
-#          git clone --branch master https://github.com/aywl1207/openwrt-cloudflared.git openwrt-cloudflared
-#          mv openwrt-cloudflared/golang/Makefile feeds/packages/lang/golang/golang/Makefile
-#          rm -rf openwrt-cloudflared
-          
+      # - name: Update custom golang
+      #   run: |
+      #     git clone --branch master https://github.com/aywl1207/openwrt-cloudflared.git openwrt-cloudflared
+      #     mv openwrt-cloudflared/golang/Makefile feeds/packages/lang/golang/golang/Makefile
+      #     rm -rf openwrt-cloudflared
       - name: Import full config for IPQ807x NSS
         run: cp -f .full_custom_config .config
-
       - name: QoL fixes on default config
         run: |
           mkdir -p files/etc/uci-defaults
@@ -60,25 +52,48 @@ jobs:
           /etc/init.d/sqm disable
           uci commit
           EOF
-
       - name: Ensure permissions for custom script
         run: chmod +x files/etc/uci-defaults/99-qol_fixes
 
+  download:
+    name: Download package sources
+    runs-on: self-hosted
+    needs: prepare
+    steps:
       - name: Download package sources
         run: make download -j$(nproc) V=s || make download V=s
 
+  build_tools:
+    name: Build tools
+    runs-on: self-hosted
+    needs: download
+    steps:
       - name: Build tools
         run: make tools/install -j$(nproc) V=s || make tools/install V=s
 
+  build_toolchain:
+    name: Build toolchain
+    runs-on: self-hosted
+    needs: build_tools
+    steps:
       - name: Build toolchain
         run: make toolchain/install -j$(nproc) V=s || make toolchain/install V=s
 
+  build_images:
+    name: Build target images
+    runs-on: self-hosted
+    needs: build_toolchain
+    steps:
       - name: Build target images
         run: make -j$(nproc) V=s || make V=s
 
+  release:
+    name: Create release
+    runs-on: self-hosted
+    needs: build_images
+    steps:
       - name: Get the current date
         run: echo "NOW=$(date +%F-%H%M)" >> $GITHUB_ENV
-
       - name: Create a release
         uses: ncipollo/release-action@v1
         with:
