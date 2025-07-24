@@ -31,7 +31,7 @@ jobs:
         run: |
           rm -rf feeds/luci/applications/luci-app-smartdns/*
           git clone --branch master https://github.com/pymumu/luci-app-smartdns.git feeds/luci/applications/luci-app-smartdns/
-          ./scripts/feeds install -a
+          ./scripts/feeds install luci -a
       - name: Import full config for IPQ807x NSS
         run: cp -f .full_custom_config .config
       - name: QoL fixes on default config
