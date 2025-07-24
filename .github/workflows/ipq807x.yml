@@ -27,11 +27,11 @@ jobs:
         run: |
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-      # - name: Update custom golang
-      #   run: |
-      #     git clone --branch master https://github.com/aywl1207/openwrt-cloudflared.git openwrt-cloudflared
-      #     mv openwrt-cloudflared/golang/Makefile feeds/packages/lang/golang/golang/Makefile
-      #     rm -rf openwrt-cloudflared
+      - name: Update latest luci-app-smartdns
+        run: |
+          rm -rf feeds/luci/applications/luci-app-smartdns/*
+          git clone --branch master https://github.com/pymumu/luci-app-smartdns.git feeds/luci/applications/luci-app-smartdns/
+          ./scripts/feeds install -a
       - name: Import full config for IPQ807x NSS
         run: cp -f .full_custom_config .config
       - name: QoL fixes on default config
